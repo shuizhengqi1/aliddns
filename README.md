@@ -7,5 +7,5 @@ region_id 默认为'cn-hangzhou',这个主要是对ECS有作用，域名解析�
 
 里面有两个aliyun的依赖包需要通过pip安装
 
-pip install aliyun-python-sdk-core
+pip install aliyun-python-sdk-core \n
 pip install aliyun-python-sdk-alidns
