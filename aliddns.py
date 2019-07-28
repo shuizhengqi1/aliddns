@@ -3,6 +3,7 @@ from aliyunsdkcore.acs_exception.exceptions import ClientException
 from aliyunsdkcore.acs_exception.exceptions import ServerException
 from aliyunsdkalidns.request.v20150109 import UpdateDomainRecordRequest,DescribeDomainRecordsRequest,DescribeDomainRecordInfoRequest,AddDomainRecordRequest
 from subprocess import *
+import time
 import json
 AccessKeyId = ''
 AccessKeySecret = ''
@@ -44,15 +45,17 @@ def updateDomainRecord(ip,recordid):
     response = cl.do_action_with_exception(request)
     print response
 resp = getRecord()
-resp_val = resp['Value']
-resp_recordid = resp['RecordId']
-print resp_val
-print resp_recordid
-
-
-if resp_val == None and ip!='' :
+if(resp):
+    resp_val = resp['Value']
+    resp_recordid = resp['RecordId']
+    print resp_val
+    print resp_recordid
+    print '时间为 %s'%(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime()))
+    
+    if(resp_val != ip):
+         updateDomainRecord(ip,resp_recordid)
+         print 'update to '+ip
+else:
     addDomainRecord(ip)
     print 'add new record'
-elif resp_val != ip and ip!= '':
-    updateDomainRecord(ip,resp_recordid)
-    print 'update to '+ip
+
