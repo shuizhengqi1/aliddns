@@ -12,6 +12,8 @@ import time
 
 import json
 
+import sys
+
 AccessKeyId = ''
 
 AccessKeySecret = ''
