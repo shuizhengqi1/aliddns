@@ -16,15 +16,15 @@ AccessKeyId = ''
 
 AccessKeySecret = ''
 
-domain = ''
+domain = ''  ##baidu.com
 
 region_id = 'cn-hangzhou'
 
-record_prefix = ""
+record_prefix = ""   ## www填写域名前缀
 
 
 
-ip = (json.loads(Popen('curl "https://api.ipify.org?format=json"',shell=True,stdout=PIPE).stdout.read()))['ip']
+ip = (json.loads(Popen('curl "https://api6.ipify.org?format=json"',shell=True,stdout=PIPE).stdout.read()))['ip']
 
 def getRecord():
 
@@ -40,7 +40,7 @@ def getRecord():
 
     for record in response['DomainRecords']['Record']:
 
-        if record['Type'] == 'A':
+        if record['Type'] == 'AAAA':
 
             return {'Value':record['Value'],'RecordId':record['RecordId']}
 
@@ -58,7 +58,7 @@ def addDomainRecord(ip):
 
     request.set_DomainName(domain)
 
-    request.set_Type('A')
+    request.set_Type('AAAA')
 
     request.set_Value(ip)
 
@@ -82,7 +82,7 @@ def updateDomainRecord(ip,recordid):
 
     request.set_RR(record_prefix)
 
-    request.set_Type('A')
+    request.set_Type('AAAA')
 
     request.set_Value(ip)
 
@@ -114,3 +114,6 @@ else:
 	addDomainRecord(ip)
 	print 'add domain'
     sys.exit(1)
+
+
+
